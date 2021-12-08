@@ -1,0 +1,22 @@
+name: yamory check weekly
+
+on:
+  pull_request:
+    branches:
+      - master
+  schedule:
+    - cron:  '0 16 * * 0'
+
+jobs:
+  excute yamory:
+    name: excute yamory
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: run Yamory
+      run: |
+        bash -c "$(curl -sSf -L https://localscanner.yamory.io/script/npm)" 
+      env:
+        CI: true
+        PROJECT_GROUP_KEY: REST_API_CLIENT_DINGTALK_MP
+        YAMORY_API_KEY: ${{ secrets.YAMORY_API_KEY }}
